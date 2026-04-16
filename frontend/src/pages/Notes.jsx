@@ -76,6 +76,18 @@ export default function Notes() {
     }
   }, [activeId]);
 
+  // Ctrl+S / Cmd+S to save
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveNote();
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [saveNote]);
+
   const activeNote = notes.find((n) => n.id === activeId);
 
   return (
